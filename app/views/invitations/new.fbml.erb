@@ -1,0 +1,4 @@
+<fb:add-section-button section="profile" />
+<% fb_multi_friend_request('SKATE', 'Invita i tuoi amici a giocare a SKATE', invitations_path) do %>
+	<%= fb_req_choice('Accetta', new_invitation_url(:from => @from_id, :canvas => true)) %>
+<% end %>

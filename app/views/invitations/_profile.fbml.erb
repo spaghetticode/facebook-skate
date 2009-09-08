@@ -1,0 +1,5 @@
+<fb:fbml>
+	<a href="<%= new_invitation_url(:from => @user.to_s, :canvas => true) %>">Sfida i tuoi amici a SKATE!</a>
+	<br />
+	Questo invito è stato inviato da <fb:name uid="<%= params[:from] %>" />
+</fb:fbml>
