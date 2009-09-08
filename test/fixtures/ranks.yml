@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  level: 1
+  next_level_id: 1
+  min_experience: 1
+
+two:
+  name: MyString
+  level: 1
+  next_level_id: 1
+  min_experience: 1
