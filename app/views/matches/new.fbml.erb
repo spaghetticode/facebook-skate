@@ -1,0 +1,8 @@
+<h1>Scegli un avversario tra i tuoi amici</h1>
+<% facebook_form_for :match, Match.new, :url => matches_path do |f| %>
+	<p>
+		<%= f.multi_friend_input :label => 'Nome' %>
+	</p>
+	<p><%= f.buttons 'inizia la sfida' %>
+<% end %>
+		

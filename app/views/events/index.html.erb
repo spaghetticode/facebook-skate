@@ -1,0 +1,28 @@
+<h1>Listing events</h1>
+
+<table cellspacing="1" cellpadding="0">
+  <tr>
+		<th>Id</th>
+    <th>Caption</th>
+    <th>Message</th>
+    <th>Image</th>
+    <th>Executable</th>
+		<th colspan="2">Actions</th>
+  </tr>
+
+<% @events.each do |event| %>
+  <tr>
+		<td><%= event.id %></td>
+    <td><%=h truncate(event.caption) %></td>
+    <td><%=h truncate(event.message) %></td>
+    <td><img src="/images/events/<%= h event.image %>" width="50"/></td>
+    <td><%=h truncate(event.executable) %></td>
+    <td><%= link_to 'Edit', edit_event_path(event) %></td>
+    <td><%= link_to 'Destroy', event, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New event', new_event_path %>

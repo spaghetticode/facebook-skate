@@ -1,0 +1,26 @@
+<h1>Listing messages</h1>
+
+<table cellspacing="1" cellpadding="0">
+  <tr>
+    <th>Flash</th>
+    <th>Body</th>
+    <th>category</th>
+		<th>Image</th>
+		<th colspan="2">Actions</th>
+  </tr>
+
+<% @messages.each do |message| %>
+  <tr>
+    <td><%=h message.flash %></td>
+    <td><%=h message.body %></td>
+    <td><%=h message.category %></td>
+		<td><img src="images/messages/<%=h message.image %>" height="50" /></td>
+    <td><%= link_to 'Edit', edit_message_path(message) %></td>
+    <td><%= link_to 'Destroy', message, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New message', new_message_path %>

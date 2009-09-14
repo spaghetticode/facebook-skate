@@ -1,0 +1,27 @@
+<% facebook_form_for(:run, Run.new, :url => match_runs_path) do |f| %>
+	<p>
+		<% unless session[:results] && session[:results][:missed] %>
+			Scegli il trick da eseguire
+			<%= f.collection_select :trick_id, current_user.available_tricks, :id, :name %>
+		<% else %>
+				Il tuo avversario ha scelto il trick <strong><%= @trick.name %></strong>
+				<%= hidden_field_tag 'run[trick_id]', @trick.id %>
+		<% end %>
+	 	<%= f.buttons 'esegui' %>
+	</p>
+	<%= hidden_field_tag :match_id, @match.id %>
+<% end %>
+<div>
+	<% if session[:results] %>
+		<table id="skate_scoreboard" cellpadding="0" cellspacing="1">
+			<tr>
+				<th><%= fb_name(current_user.facebook_id) %></th>
+				<th><%= fb_name(@contender.facebook_id) %></th>
+			</tr>
+			<tr>
+				<td style="color:red"><%= "SKATE"[0, session[:results][:losses]] %></td>
+				<td style="color:green"><%= "SKATE"[0, session[:results][:wins]] %></td>
+			</tr>
+		</table>
+	<% end %>
+</div>

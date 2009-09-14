@@ -1,0 +1,34 @@
+form.button-to {
+	display:inline;
+}
+div#skate_main {
+	float:left;
+	width:450px;
+	margin-top:30px;
+}
+
+table#skate_status {
+	float:right;
+	margin:30px;
+	background:gray;
+	padding:1px;
+}
+
+#skate_status td, #skate_status th {
+	padding:5px 10px;
+	background:white;
+}
+
+#skate_status td {
+	border-top:1px solid gray;
+}
+
+table#skate_scoreboard {
+	background:gray;
+}
+
+#skate_scoreboard th, #skate_scoreboard td {
+	text-align:center;
+	background:white;
+	padding:10px;
+}

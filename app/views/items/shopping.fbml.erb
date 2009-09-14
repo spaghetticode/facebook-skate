@@ -1,0 +1,20 @@
+<% @items.each do |item| %>
+	<div style="overflow:auto;padding:10px 0px">
+		<%= image_tag "items/#{item.image}", :style => 'float:left;' %>
+		<div style="margin-left:200px;">
+			<h3><%= item.name.upcase %></h3>
+			<p><%= item.description %><br />+<%= item.quantity %> punti <%= item.translated_attribute %></p>
+			<h3>
+				livello <%= item.rank.name %>,
+				prezzo: &euro; <%= item.price %>
+			</h3>
+			<p>
+				<% if current_user.items.include?(item) %>
+					<%= button_to 'vendi', sell_item_path(item), :method => :delete, :style => 'color:red' %>
+				<% else %>
+					<%= button_to 'acquista', buy_item_path(item), :style => 'color:green' %>
+				<% end %>
+			</p>
+		</div>
+	</div>
+<% end %>

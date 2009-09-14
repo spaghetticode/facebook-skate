@@ -1,3 +1,45 @@
 <fb:fbml>
-	<%= yield %>
+	<%= stylesheet_link_tag 'skate' %>
+	
+	<% fb_tabs do %>
+		<%= fb_tab_item 'SKATE', new_match_path, :selected => if_skate? %>
+		<%= fb_tab_item 'allenamento', training_path %>
+		<%= fb_tab_item 'shopping', shopping_items_path, :selected => if_items? %>
+		<%= fb_tab_item 'fatti un giro in skate', choose_events_path, :selected => if_events? %>
+	<% end %>
+	<br />
+	
+	<%= facebook_messages %>
+	
+	<div id="skate_main">
+		<%= yield %>
+	</div>
+	
+	<table id="skate_status" cellpadding="0" cellspacing="0">
+		<tr>
+			<th colspan="2"><%= fb_name(current_user.facebook_id, :useyou => false) %></th>
+		</tr>
+		<tr>
+			<td>Livello:</td>
+			<td><%= current_user.rank.name %></td>
+		</tr>
+		<tr>
+			<td>Energia:</td>
+			<td><%= current_user.stamina %></td>
+		</tr>
+		<tr>
+			<td>Destrezza:</td>
+			<td><%= current_user.dexterity %></td>
+		</tr>
+		<tr>
+			<td>Esperienza:</td>
+			<td><%= current_user.experience %></td>
+		</tr>
+		<tr>
+			<td>Denaro:</td>
+			<td><%= current_user.money %> &euro; </td>
+		</tr>
+	</table>
+	
+	<p style="clear:both;padding-top:100px"><%#= session.to_yaml %></p>
 </fb:fbml>

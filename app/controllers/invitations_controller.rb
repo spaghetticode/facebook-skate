@@ -7,12 +7,18 @@ class InvitationsController < ApplicationController
   def new
     @user = facebook_session.user
     if params[:from]
-      @user.profile_fbml = render_to_string(:partial => 'profile', :locals => {:from => params[:from]})
+      update_profile
     end
     @from_id = @user.to_s
   end
   
   def create
     @invited_ids = params[:ids]
+  end
+  
+  private
+  
+  def update_profile
+    @user.profile_fbml = render_to_string(:partial => 'profile', :locals => {:from => params[:from]})
   end
 end

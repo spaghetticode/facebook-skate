@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  message: MyText
+  image: MyString
+  executable: MyText
+
+two:
+  name: MyString
+  message: MyText
+  image: MyString
+  executable: MyText

@@ -1,0 +1,18 @@
+<p>
+  <b>Flash:</b>
+  <%=h @message.flash %>
+</p>
+
+<p>
+  <b>Body:</b>
+  <%=h @message.body %>
+</p>
+
+<p>
+  <b>category:</b>
+  <%=h @message.category %>
+</p>
+
+
+<%= link_to 'Edit', edit_message_path(@message) %> |
+<%= link_to 'Back', messages_path %>
