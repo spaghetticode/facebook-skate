@@ -6,11 +6,7 @@
 	</tr>
 	<tr>
 		<td class="green"><%= @wins.size %></td>
-		<td>
-			<% if @wins.last %>
-				<%= fb_name(@wins.last.contender.facebook_id) %>
-			<% end %>
-		</td>
+		<td><%= fb_name(@wins.last.contender.facebook_id) %></td>
 	</tr>
 	<tr>
 		<th class="upcase red">sconfitte totali</th>
@@ -18,11 +14,7 @@
 	</tr>
 	<tr>
 		<td class="red"><%= @losses.size %></td>
-		<td>
-			<% if @losses.last %>
-				<%= fb_name(@losses.last.contender.facebook_id) %>
-			<% end %>
-		</td>
+		<td><%= fb_name(@losses.last.contender.facebook_id) %></td>
 	</tr>
 </table>
 

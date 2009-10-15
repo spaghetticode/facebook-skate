@@ -14,6 +14,8 @@ class InvitationsController < ApplicationController
   
   def create
     @invited_ids = params[:ids]
+    flash[:notice] = 'Azione eseguita con successo.'
+    redirect_to new_match_path
   end
   
   private

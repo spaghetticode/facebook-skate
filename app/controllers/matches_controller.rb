@@ -2,6 +2,10 @@ class MatchesController < ApplicationController
   before_filter :clear_results
   
   def new
+    if current_user.facebook_session.user.profile_fbml.blank?
+      current_user.facebook_session.user.profile_fbml = 
+      '<p>Ho aggiunto il gioco <a href="http://apps.facebook.com/playskate/">SKATE</a> alle mie applicazioni.</p>'
+    end
   end
 
   def create
@@ -16,8 +20,13 @@ class MatchesController < ApplicationController
   end
 
   def index
-    @wins = current_user.won_matches
-    @losts = current_user.lost_matches
+    if current_user.matches.empty?
+      flash[:notice] = 'Non hai ancora sfidato nessuno, se vuoi puoi farlo adesso.'
+      redirect_to new_match_path
+    else
+      @wins = current_user.won_matches
+      @losses = current_user.lost_matches
+    end
   end
 
   private

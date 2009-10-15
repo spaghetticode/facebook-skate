@@ -12,4 +12,8 @@ module ApplicationHelper
   def if_skate?
     controller.controller_name == 'matches' or controller.controller_name == 'runs'
   end
+  
+  def if_training?
+    controller.controller_name == 'activities'
+  end
 end

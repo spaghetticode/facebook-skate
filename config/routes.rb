@@ -10,7 +10,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.training  '/training',  :controller => 'activities', :action => 'training'
   
-  map.root :controller => 'invitations', :action => 'new'
+  map.root :controller => 'matches', :action => 'index'
   
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'

@@ -1,3 +1,15 @@
+.upcase {
+	text-transform:uppercase;
+}
+
+.green {
+	color:green;
+}
+
+.red {
+	color:red;
+}
+
 form.button-to {
 	display:inline;
 }
@@ -23,12 +35,22 @@ table#skate_status {
 	border-top:1px solid gray;
 }
 
-table#skate_scoreboard {
+table#skate_scoreboard, table#matches {
 	background:gray;
+	margin:30px 0px;
+}
+
+#matches th, #matches td {
+	padding:10px;
+	background:white;
+	text-align:center;
 }
 
 #skate_scoreboard th, #skate_scoreboard td {
 	text-align:center;
 	background:white;
 	padding:10px;
+}
+#skate_scoreboard td {
+	font-size:2em;
 }

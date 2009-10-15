@@ -33,9 +33,8 @@ describe InvitationsController do
   end
   
   # CREATE
-  it 'should post create' do
+  it 'should redirect on create' do
     facebook_post :create, :ids => ['1234']
-    response.should be_success
-    response.should render_template(:create)
+    response.body.should =~ /<fb:redirect/
   end
 end

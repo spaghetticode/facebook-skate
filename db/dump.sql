@@ -14,26 +14,22 @@ INSERT INTO "schema_migrations" VALUES('20090912123720');
 INSERT INTO "schema_migrations" VALUES('20090912131823');
 INSERT INTO "schema_migrations" VALUES('20090912191541');
 INSERT INTO "schema_migrations" VALUES('20090913090409');
-CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "facebook_id" integer(20) NOT NULL, "session_key" varchar(255), "created_at" datetime, "updated_at" datetime, "rank_id" integer, "experience" integer DEFAULT 0, "money" integer DEFAULT 0, "trained_on" date, "stamina" integer DEFAULT 0, "dexterity" integer DEFAULT 0);
-INSERT INTO "users" VALUES(1,1536717821,NULL,'2009-09-11 18:46:30','2009-09-12 19:28:44',3,232,177,'2009-09-12',0,0);
-INSERT INTO "users" VALUES(2,1732513836,NULL,'2009-09-11 18:46:45','2009-09-12 07:23:59',1,20,0,NULL,0,0);
-INSERT INTO "users" VALUES(3,100000207486578,NULL,'2009-09-11 20:18:38','2009-09-12 07:31:00',1,8,0,NULL,0,0);
-INSERT INTO "users" VALUES(4,653163912,NULL,'2009-09-11 20:37:35','2009-09-12 07:29:20',1,38,0,NULL,0,0);
-INSERT INTO "users" VALUES(5,1462084019,NULL,'2009-09-11 21:13:09','2009-09-12 08:04:11',1,10,0,NULL,0,0);
-INSERT INTO "users" VALUES(6,1159327627,NULL,'2009-09-11 22:24:23','2009-09-11 22:25:35',1,4,0,NULL,0,0);
-INSERT INTO "users" VALUES(7,577192872,NULL,'2009-09-11 22:27:10','2009-09-11 22:28:22',1,4,0,NULL,0,0);
-INSERT INTO "users" VALUES(8,1526945457,NULL,'2009-09-11 22:33:17','2009-09-11 22:36:59',1,5,0,NULL,0,0);
-INSERT INTO "users" VALUES(9,1248033768,NULL,'2009-09-12 07:31:13','2009-09-12 11:24:24',1,208,29,NULL,0,0);
-INSERT INTO "users" VALUES(10,1023378369,NULL,'2009-09-12 07:57:41','2009-09-12 07:57:57',1,2,0,NULL,0,0);
-INSERT INTO "users" VALUES(11,1041697580,NULL,'2009-09-12 08:05:09','2009-09-12 10:00:27',1,177,29,NULL,0,0);
-INSERT INTO "users" VALUES(12,1541329043,NULL,'2009-09-12 15:21:22','2009-09-12 15:24:07',1,121,197,NULL,0,0);
+INSERT INTO "schema_migrations" VALUES('20090913103942');
+INSERT INTO "schema_migrations" VALUES('20090913115618');
+INSERT INTO "schema_migrations" VALUES('20090913115948');
+INSERT INTO "schema_migrations" VALUES('20090913123145');
+INSERT INTO "schema_migrations" VALUES('20090913123245');
+INSERT INTO "schema_migrations" VALUES('20090913203700');
+INSERT INTO "schema_migrations" VALUES('20090913210345');
+INSERT INTO "schema_migrations" VALUES('20090914214854');
 DELETE FROM sqlite_sequence;
 INSERT INTO "sqlite_sequence" VALUES('ranks',10);
 INSERT INTO "sqlite_sequence" VALUES('tricks',12);
-INSERT INTO "sqlite_sequence" VALUES('users',12);
-INSERT INTO "sqlite_sequence" VALUES('matches',52);
+INSERT INTO "sqlite_sequence" VALUES('matches',57);
 INSERT INTO "sqlite_sequence" VALUES('events',8);
 INSERT INTO "sqlite_sequence" VALUES('items',14);
+INSERT INTO "sqlite_sequence" VALUES('users',12);
+INSERT INTO "sqlite_sequence" VALUES('messages',6);
 CREATE TABLE "ranks" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "level" integer, "next_rank_id" integer, "min_experience" integer, "created_at" datetime, "updated_at" datetime);
 INSERT INTO "ranks" VALUES(1,'1',1,2,0,'2009-09-11 18:46:24','2009-09-11 18:46:24');
 INSERT INTO "ranks" VALUES(2,'2',2,3,100,'2009-09-11 18:46:24','2009-09-11 18:46:24');
@@ -111,56 +107,92 @@ INSERT INTO "matches" VALUES(49,1,11,'t','t','2009-09-12 09:59:18','2009-09-12 1
 INSERT INTO "matches" VALUES(50,1,10,'f','f','2009-09-12 10:05:44','2009-09-12 10:05:44');
 INSERT INTO "matches" VALUES(51,1,9,'t','t','2009-09-12 11:20:07','2009-09-12 11:24:24');
 INSERT INTO "matches" VALUES(52,1,12,'f','t','2009-09-12 15:21:22','2009-09-12 15:24:07');
+INSERT INTO "matches" VALUES(53,1,9,'t','t','2009-09-15 06:15:20','2009-09-15 06:18:05');
+INSERT INTO "matches" VALUES(54,1,9,'f','f','2009-09-15 06:19:03','2009-09-15 06:19:03');
+INSERT INTO "matches" VALUES(55,1,9,'f','f','2009-09-15 21:13:07','2009-09-15 21:13:07');
+INSERT INTO "matches" VALUES(56,1,11,'f','f','2009-09-15 21:18:28','2009-09-15 21:18:28');
+INSERT INTO "matches" VALUES(57,1,9,'f','f','2009-09-15 22:04:38','2009-09-15 22:04:38');
 CREATE TABLE "actions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "message" text, "image" varchar(255), "executable" text, "created_at" datetime, "updated_at" datetime);
 CREATE TABLE "events" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "caption" varchar(255), "message" text, "image" varchar(255), "executable" text, "created_at" datetime, "updated_at" datetime);
 INSERT INTO "events" VALUES(1,'Sei proprio un tipo fortunato!','Oggi è il tuo giorno fortunato: hai trovato 10&euro; per terra.','10euro.jpg','current_user.update_attribute(
   :money,
   current_user.money+10
 )','2009-09-12 12:43:00','2009-09-12 13:19:40');
-INSERT INTO "events" VALUES(2,'Che animo nobile! Sei squattrinato ma offri da bere agli amici.','Ti sei fermato al bar e hai offerto da bere ai tuoi amici. Hai speso 10&euro;.','beers.jpg','if current_user.money >= 10
+INSERT INTO "events" VALUES(2,'Che animo nobile! Sei squattrinato ma offri lo stesso da bere agli amici.','Ti sei fermato al bar e hai offerto da bere ai tuoi amici. Hai speso 10&euro;.','beers.jpg','if current_user.money >= 10
   current_user.update_attribute(
     :money,
     current_user.money-10
   )
-end','2009-09-12 13:13:16','2009-09-12 13:30:41');
-INSERT INTO "events" VALUES(3,'I video anni 80 sono spettacolari!','Oggi piove quindi decidi di restare in casa a guardare un video di skate.','vhs.jpg','','2009-09-12 13:29:05','2009-09-12 15:18:57');
-INSERT INTO "events" VALUES(4,'5 euro per una vite... ma siamo matti?!?','Skeitando per strada si è rotto il kingpin. Hai speso 5&euro; per comprarne uno nuovo.','kingpin.jpg','if current_user.money >= 5
+end','2009-09-12 13:13:16','2009-09-13 10:00:39');
+INSERT INTO "events" VALUES(3,'I video anni 80 sono spettacolari!','Oggi piove quindi decidi di restare in casa a guardare un video di skate. Guadagni 10 punti energia.','vhs.jpg','current_user.update_attribute(
+  :stamina, current_user.stamina+10
+)','2009-09-12 13:29:05','2009-09-13 09:50:45');
+INSERT INTO "events" VALUES(4,'5 euro per una vite... ma siamo matti?!?','Skeitando per strada ti si è rotto il kingpin. Hai speso 5&euro; per comprarne uno nuovo.','kingpin.jpg','if current_user.money >= 5
   current_user.update_attribute(
     :money,
     current_user.money-5
   )
-end','2009-09-12 13:39:19','2009-09-12 13:42:08');
-INSERT INTO "events" VALUES(5,'Le magliette Thrasher spaccano!!!','Sei andato a trovare il Soda in negozio che ti ha regalato una maglietta nuova.','thrasher.jpg','','2009-09-12 14:10:24','2009-09-12 14:10:24');
-INSERT INTO "events" VALUES(6,'Poteva andarti peggio. Stai più attento quando fai flip dai gap.','Ti sei distorto la caviglia. Devi stare fermo una settimana, perdi 20 punti di esperienza.','ambulance.jpg','if current_user.experience >= 20
-  current_user.update_attribute(
-    :experience,
-    current_user.experience-20
+end','2009-09-12 13:39:19','2009-09-13 10:01:21');
+INSERT INTO "events" VALUES(5,'Le magliette Thrasher spaccano!!!','Sei passato in negozio e ti hanno regalato una maglietta nuova. Ora ti senti carico, guadagni 10 punti energia.','thrasher.jpg','current_user.update_attribute(
+  :stamina,
+  current_user.stamina+10
+)','2009-09-12 14:10:24','2009-09-13 09:53:00');
+INSERT INTO "events" VALUES(6,'Poteva andarti peggio. Stai più attento quando fai flip dai gap.','Ti sei distorto la caviglia. Devi stare fermo una settimana, perdi 10 punti di esperienza e 10 punti energia.','ambulance.jpg','if current_user.experience >= 10 and current_user.stamina >= 10 
+  current_user.update_attributes(
+    :experience => current_user.experience-10,
+    :stamina => current_user.stamina-10
   )
 end
-','2009-09-12 14:36:41','2009-09-12 14:48:19');
+','2009-09-12 14:36:41','2009-09-13 09:54:26');
 INSERT INTO "events" VALUES(7,'Guarda cosa ti tocca fare per tirare su un po'' di soldi...','Dai lezioni di skate ai bambini del quartiere, le mamme ti pagano 10&euro; all''ora per tenerli buoni.','baby.jpg','current_user.update_attribute(
   :money,
   current_user.money+10
 )','2009-09-12 15:02:51','2009-09-12 15:08:45');
-INSERT INTO "events" VALUES(8,'Che posto fanstastico! Sicuro che non è in Italia.','Hai skeitato nel nuovo skatepark comunale. Guadagni 20 punti di esperienza.','skatepark.jpg','current_user.update_attribute(
-  :experience,
-  current_user.experience+20
+INSERT INTO "events" VALUES(8,'Che posto fanstastico! Sicuro che non è in Italia.','Hai skeitato nel nuovo skatepark comunale. Guadagni 10 punti di esperienza e destrezza.','skatepark.jpg','current_user.update_attributes(
+  :experience => current_user.experience+10,
+  :dexterity => current_user.dexterity+10
 )
-current_user.try_to_update','2009-09-12 15:29:28','2009-09-12 19:35:48');
-CREATE TABLE "items" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "description" varchar(255), "price" integer, "rank_id" integer, "image" varchar(255), "created_at" datetime, "updated_at" datetime);
-INSERT INTO "items" VALUES(1,'viti e bulloni','a testa svasata, per cacciavite a croce',7,1,'bolts.jpg','2009-09-13 09:38:42','2009-09-13 09:38:42');
-INSERT INTO "items" VALUES(2,'riser pads','alzano la tavola di 5 mm',7,1,'riser_pads.jpg','2009-09-13 09:39:11','2009-09-13 09:39:17');
-INSERT INTO "items" VALUES(3,'distanziali','in acciaio, i cuscinetti durano di più',8,1,'spacer.jpg','2009-09-13 09:39:46','2009-09-13 09:39:51');
-INSERT INTO "items" VALUES(4,'skateboard giocattolo','100% plastica',15,1,'old_deck.jpg','2009-09-13 09:40:32','2009-09-13 09:40:32');
-INSERT INTO "items" VALUES(5,'kingpin','set 2 kingpin in acciaio temperato',10,1,'kingpins.jpg','2009-09-13 09:40:57','2009-09-13 09:40:57');
-INSERT INTO "items" VALUES(6,'truck no brand','set 2 sterzi pesanti',30,1,'truck.jpg','2009-09-13 09:41:24','2009-09-13 09:41:24');
-INSERT INTO "items" VALUES(7,'gommini truck','gommini morbidi di ricambio',10,1,'gommini.jpg','2009-09-13 09:41:47','2009-09-13 09:41:47');
-INSERT INTO "items" VALUES(8,'tavola no logo','tavola di marca sconosciuta',35,1,'deck.jpg','2009-09-13 09:42:14','2009-09-13 09:42:14');
-INSERT INTO "items" VALUES(9,'ruote no logo','4 ruote bianche',20,1,'blank_wheels.jpg','2009-09-13 09:42:41','2009-09-13 09:42:49');
-INSERT INTO "items" VALUES(10,'cuscinetti a sfera','ABEC 5, ottima qualità',20,1,'bearings.jpg','2009-09-13 09:43:19','2009-09-13 09:43:26');
-INSERT INTO "items" VALUES(11,'truck Indy','classici color oro, Paris Hilton ne porta uno nella borsetta',80,1,'indy_gold.jpg','2009-09-13 09:44:05','2009-09-13 09:44:40');
-INSERT INTO "items" VALUES(12,'scarpe Vans','scarpe rigide',55,1,'vans.jpg','2009-09-13 09:45:11','2009-09-13 09:45:11');
-INSERT INTO "items" VALUES(13,'ruote Spitfire','route di ottima fattura, set da 4',35,1,'wheels.jpg','2009-09-13 09:45:39','2009-09-13 09:46:49');
-INSERT INTO "items" VALUES(14,'scarpe Old Skool','scarpe morbide e grippose',45,1,'oldskool.jpg','2009-09-13 09:46:12','2009-09-13 09:46:40');
+current_user.try_to_update','2009-09-12 15:29:28','2009-09-14 21:10:46');
+CREATE TABLE "items" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "description" varchar(255), "price" integer, "rank_id" integer, "image" varchar(255), "created_at" datetime, "updated_at" datetime, "quantity" integer DEFAULT 0, "attribute" varchar(255));
+INSERT INTO "items" VALUES(1,'viti e bulloni','a testa svasata, per cacciavite a croce',7,1,'bolts.jpg','2009-09-13 09:38:42','2009-09-13 21:22:00',3,'stamina');
+INSERT INTO "items" VALUES(2,'riser pads','alzano la tavola di 5 mm',7,2,'riser_pads.jpg','2009-09-13 09:39:11','2009-09-13 21:22:00',5,'stamina');
+INSERT INTO "items" VALUES(3,'distanziali','in acciaio, usandoli tuoi cuscinetti dureranno di più',8,2,'spacer.jpg','2009-09-13 09:39:46','2009-09-13 21:09:12',3,'dexterity');
+INSERT INTO "items" VALUES(4,'skateboard giocattolo','100% plastica',15,1,'old_deck.jpg','2009-09-13 09:40:32','2009-09-13 21:08:38',5,'dexterity');
+INSERT INTO "items" VALUES(5,'kingpin','set 2 kingpin in acciaio temperato',10,1,'kingpins.jpg','2009-09-13 09:40:57','2009-09-13 21:08:51',3,'dexterity');
+INSERT INTO "items" VALUES(6,'truck no logo','set 2 sterzi pesanti',30,2,'truck.jpg','2009-09-13 09:41:24','2009-09-13 21:09:23',7,'dexterity');
+INSERT INTO "items" VALUES(7,'gommini truck','gommini morbidi di ricambio',10,3,'gommini.jpg','2009-09-13 09:41:47','2009-09-13 21:09:47',4,'dexterity');
+INSERT INTO "items" VALUES(8,'tavola no logo','tavola di marca sconosciuta',35,3,'deck.jpg','2009-09-13 09:42:14','2009-09-13 21:09:54',10,'dexterity');
+INSERT INTO "items" VALUES(9,'ruote no logo','4 ruote bianche',20,2,'blank_wheels.jpg','2009-09-13 09:42:41','2009-09-13 21:22:00',7,'stamina');
+INSERT INTO "items" VALUES(10,'cuscinetti a sfera','ABEC 5, ottima qualità',20,4,'bearings.jpg','2009-09-13 09:43:19','2009-09-13 21:22:00',15,'stamina');
+INSERT INTO "items" VALUES(11,'truck Indy','classici color oro, Paris Hilton ne porta uno nella borsetta',80,4,'indy_gold.jpg','2009-09-13 09:44:05','2009-09-13 21:22:00',15,'stamina');
+INSERT INTO "items" VALUES(12,'scarpe Vans','scarpe rigide',55,4,'vans.jpg','2009-09-13 09:45:11','2009-09-13 21:22:00',20,'stamina');
+INSERT INTO "items" VALUES(13,'ruote Spitfire','route di ottima fattura, set da 4',35,3,'wheels.jpg','2009-09-13 09:45:39','2009-09-13 21:10:05',10,'dexterity');
+INSERT INTO "items" VALUES(14,'scarpe Old Skool','scarpe morbide e grippose',45,4,'oldskool.jpg','2009-09-13 09:46:12','2009-09-13 21:10:58',20,'dexterity');
+CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "facebook_id" integer(20) NOT NULL, "session_key" varchar(255), "created_at" datetime, "updated_at" datetime, "rank_id" integer, "experience" integer DEFAULT 0, "money" integer DEFAULT 0, "stamina" integer DEFAULT 0, "dexterity" integer DEFAULT 0, "trainings" varchar(255) DEFAULT '');
+INSERT INTO "users" VALUES(1,1536717821,NULL,'2009-09-11 18:46:30','2009-09-15 22:17:36',3,289,2,47,44,'2009-09-16');
+INSERT INTO "users" VALUES(2,1732513836,NULL,'2009-09-11 18:46:45','2009-09-12 07:23:59',1,20,0,0,0,'');
+INSERT INTO "users" VALUES(3,100000207486578,NULL,'2009-09-11 20:18:38','2009-09-12 07:31:00',1,8,0,0,0,'');
+INSERT INTO "users" VALUES(4,653163912,NULL,'2009-09-11 20:37:35','2009-09-12 07:29:20',1,38,0,0,0,'');
+INSERT INTO "users" VALUES(5,1462084019,NULL,'2009-09-11 21:13:09','2009-09-12 08:04:11',1,10,0,0,0,'');
+INSERT INTO "users" VALUES(6,1159327627,NULL,'2009-09-11 22:24:23','2009-09-11 22:25:35',1,4,0,0,0,'');
+INSERT INTO "users" VALUES(7,577192872,NULL,'2009-09-11 22:27:10','2009-09-11 22:28:22',1,4,0,0,0,'');
+INSERT INTO "users" VALUES(8,1526945457,NULL,'2009-09-11 22:33:17','2009-09-11 22:36:59',1,5,0,0,0,'');
+INSERT INTO "users" VALUES(9,1248033768,NULL,'2009-09-12 07:31:13','2009-09-15 06:18:05',1,216,29,0,0,'');
+INSERT INTO "users" VALUES(10,1023378369,NULL,'2009-09-12 07:57:41','2009-09-12 07:57:57',1,2,0,0,0,'');
+INSERT INTO "users" VALUES(11,1041697580,NULL,'2009-09-12 08:05:09','2009-09-12 10:00:27',1,177,29,0,0,'');
+INSERT INTO "users" VALUES(12,1541329043,NULL,'2009-09-12 15:21:22','2009-09-12 15:24:07',1,121,197,0,0,'');
+CREATE TABLE "items_users" ("item_id" integer, "user_id" integer);
+INSERT INTO "items_users" VALUES(6,1);
+INSERT INTO "items_users" VALUES(9,1);
+INSERT INTO "items_users" VALUES(7,1);
+INSERT INTO "items_users" VALUES(8,1);
+INSERT INTO "items_users" VALUES(13,1);
+CREATE TABLE "messages" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "body" text, "image" varchar(255), "category" varchar(255), "created_at" datetime, "updated_at" datetime);
+INSERT INTO "messages" VALUES(1,'Da buon concrete lover e pool rider oggi hai scelto di allenarti qui.','bowls.jpg','training','2009-09-13 12:25:43','2009-09-13 12:54:30');
+INSERT INTO "messages" VALUES(2,'Questo è uno dei tuoi posti preferiti per allenarti.','pyramid.jpg','training','2009-09-13 12:30:12','2009-09-13 12:34:20');
+INSERT INTO "messages" VALUES(3,'Fare street in mezzo al traffico è uno spasso.','street.jpg','training','2009-09-13 12:35:29','2009-09-13 12:54:38');
+INSERT INTO "messages" VALUES(4,'Stufo dei soliti posti oggi ti sei allenato sugli handrail.','handrail.jpg','training','2009-09-13 12:39:35','2009-09-13 12:39:35');
+INSERT INTO "messages" VALUES(5,'Mi raccomando metti le protezioni!','vert.jpg','training','2009-09-13 12:43:08','2009-09-13 12:43:41');
+INSERT INTO "messages" VALUES(6,'Downhill a paletta divertimento assicurato!','downhill.jpg','training','2009-09-13 12:46:33','2009-09-13 12:46:40');
 CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version");
 COMMIT;

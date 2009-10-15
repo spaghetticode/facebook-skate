@@ -15,8 +15,8 @@
 	<% if session[:results] %>
 		<table id="skate_scoreboard" cellpadding="0" cellspacing="1">
 			<tr>
-				<th><%= fb_name(current_user.facebook_id) %></th>
-				<th><%= fb_name(@contender.facebook_id) %></th>
+				<th><%= fb_name(current_user.facebook_id, :linked => false) %></th>
+				<th><%= fb_name(@contender.facebook_id, :linked => false) %></th>
 			</tr>
 			<tr>
 				<td style="color:red"><%= "SKATE"[0, session[:results][:losses]] %></td>

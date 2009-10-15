@@ -1,12 +1,13 @@
 class User < ActiveRecord::Base
   belongs_to :rank
   has_many :matches
+  has_many :closed_matches, :class_name => 'Match', :conditions => {:closed => true}
   has_and_belongs_to_many :items
   
   validates_presence_of :facebook_id
   
   before_save :set_initial_rank
-    
+  
   def self.for(facebook_id, facebook_session=nil)
     returning User.find_or_create_by_facebook_id(facebook_id) do |u|
       u.store_session(facebook_session.session_key) if facebook_session
@@ -40,11 +41,11 @@ class User < ActiveRecord::Base
   end
   
   def won_matches
-    matches.all(:conditions => {:victory => true})
+    closed_matches.all(:conditions => {:victory => true})
   end
   
   def lost_matches
-    matches.all(:conditions => {:victory => false})
+    closed_matches.all(:conditions => {:victory => false})
   end
   
   def store_session(session_key)
@@ -76,6 +77,8 @@ class User < ActiveRecord::Base
   def try_to_update
     if rank.next_rank && experience >= rank.next_rank.min_experience
       update_attribute(:rank, rank.next_rank)
+      profile_text = "<p>Ho raggiunto il livello #{rank.level} a <a href=\"http://apps.facebook.com/playskate/\">SKATE</a>."
+      facebook_session.user.profile_fbml = profile_text
     end
   end
   
