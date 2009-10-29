@@ -2,7 +2,7 @@ class EventsController < ApplicationController
   ensure_authenticated_to_facebook  :only => :choose
   before_filter :admin_authorize, :except => :choose
   skip_before_filter :set_current_user, :except => :choose
-  layout 'events'
+  layout 'admin'
   
   def index
     @events = Event.all

@@ -2,7 +2,7 @@ class ItemsController < ApplicationController
   ensure_authenticated_to_facebook :only => [:shopping, :buy, :sell]
   before_filter :admin_authorize, :except => [:shopping, :buy, :sell]
   skip_before_filter :set_current_user, :except => [:shopping, :buy, :sell]
-  layout 'events'
+  layout 'admin'
   
   def shopping
     @items = Item.all(:order => 'rank_id', :conditions => ['rank_id <= ?', current_user.rank_id])

@@ -19,9 +19,13 @@ div#skate_main {
 	margin-top:30px;
 }
 
-table#skate_status {
+div#right_column {
 	float:right;
-	margin:30px;
+	width:150px;
+}
+
+table#skate_status {
+	margin:10px;
 	background:gray;
 	padding:1px;
 }
@@ -51,6 +55,12 @@ table#skate_scoreboard, table#matches {
 	background:white;
 	padding:10px;
 }
+
 #skate_scoreboard td {
 	font-size:2em;
+}
+
+div#sponsor p {
+	text-align:center;
+	margin:5px;
 }

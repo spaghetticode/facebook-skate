@@ -1,0 +1,7 @@
+<div id="sponsor">
+	<% @sponsor = Sponsor.random %>
+	<p>Sponsored by</p>
+	<a href="<%= @sponsor.url %>" title="<%= @sponsor.name %>">
+		<%= image_tag @sponsor.image_path, :alt => @sponsor.name %>
+	</a>
+</div>

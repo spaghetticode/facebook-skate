@@ -2,7 +2,7 @@ class MessagesController < ApplicationController
   ensure_authenticated_to_facebook :only => []
   before_filter :admin_authorize
   skip_before_filter :set_current_user
-  layout 'events'
+  layout 'admin'
   
   def index
     @messages = Message.all

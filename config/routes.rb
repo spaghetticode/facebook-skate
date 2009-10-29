@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :sponsors
+
   map.resources :messages
 
   map.resources :items, :collection => {:shopping => :get}, :member => {:buy => :post, :sell => :delete}

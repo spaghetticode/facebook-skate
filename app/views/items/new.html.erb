@@ -2,31 +2,7 @@
 
 <% form_for(@item) do |f| %>
   <%= f.error_messages %>
-
-  <p>
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </p>
-  <p>
-    <%= f.label :description %><br />
-    <%= f.text_field :description %>
-  </p>
-  <p>
-    <%= f.label :price %><br />
-    <%= f.text_field :price %>
-  </p>
-  <p>
-    <%= f.label :image %><br />
-    <%= f.text_field :image %>
-  </p>
-  <p>
-    <%= f.label :attribute %><br />
-    <%= f.text_field :attribute %>
-  </p>
-  <p>
-    <%= f.label :quantity %><br />
-    <%= f.text_field :quantity %>
-  </p>
+	<%= render :partial => 'form_fields', :locals => {:f => f} %>
   <p>
     <%= f.label :rank_id %><br />
     <%= f.select :rank_id, Rank.all.map{|r| [r.name, r.id]} %>

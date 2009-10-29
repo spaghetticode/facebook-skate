@@ -1,0 +1,13 @@
+<h1>Editing sponsor</h1>
+
+<% form_for(@sponsor) do |f| %>
+  <%= f.error_messages %>
+
+	<%= render :partial => 'form_fields', :locals => {:f => f} %>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @sponsor %> |
+<%= link_to 'Back', sponsors_path %>

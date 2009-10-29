@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090914214854) do
+ActiveRecord::Schema.define(:version => 20091015122819) do
 
   create_table "actions", :force => true do |t|
     t.string   "name"
@@ -68,6 +68,14 @@ ActiveRecord::Schema.define(:version => 20090914214854) do
     t.integer  "level"
     t.integer  "next_rank_id"
     t.integer  "min_experience"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "sponsors", :force => true do |t|
+    t.string   "name"
+    t.string   "url"
+    t.string   "image_filename"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

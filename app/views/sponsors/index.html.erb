@@ -1,0 +1,24 @@
+<h1>Listing sponsors</h1>
+
+<table cellspacing="1" cellpadding="0">
+  <tr>
+    <th>Name</th>
+    <th>Url</th>
+    <th>Image path</th>
+		<th colspan="2">Actions</th>
+  </tr>
+
+<% @sponsors.each do |sponsor| %>
+  <tr>
+    <td><%=h sponsor.name %></td>
+    <td><%=h sponsor.url %></td>
+    <td><%= image_tag h(sponsor.image_path) %></td>
+    <td><%= link_to 'Edit', edit_sponsor_path(sponsor) %></td>
+    <td><%= link_to 'Destroy', sponsor, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New sponsor', new_sponsor_path %>
