@@ -36,8 +36,8 @@ test:
     server_alive_interval: 0
 
 production:
-  api_key: c3ea42b40e9728a9ee985a3f73c65066
-  secret_key:     3a884eae247b6cc45f7210f0dd2c788e
+  api_key: f6c2444a4dd15404e1c5aefdba1f436e
+  secret_key:     db09125d2806cf31eed529e711856a76
   canvas_page_name: skate_demo
   callback_url: http://skate.heroku.com
   set_asset_host_to_callback_url: true
