@@ -38,7 +38,7 @@ test:
 production:
   api_key:     c3ea42b40e9728a9ee985a3f73c65066
   secret_key:     3a884eae247b6cc45f7210f0dd2c788e
-  canvas_page_name: skate
+  canvas_page_name: playskate
   callback_url: http://skate.heroku.com
   set_asset_host_to_callback_url: true
   pretty_errors: true
