@@ -10,7 +10,7 @@ class EventsController < ApplicationController
   
   def choose
     # randomizzo l'evento trovato:
-    @event = Event.find(rand(8)+1)
+    @event = Event.find(rand(Event.count)+1)
     eval @event.executable
     flash.now[:notice] = @event.message
     render :layout => 'application'

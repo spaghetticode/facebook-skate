@@ -6,9 +6,7 @@ class InvitationsController < ApplicationController
   
   def new
     @user = facebook_session.user
-    if params[:from]
-      update_profile
-    end
+    update_profile if params[:from]
     @from_id = @user.to_s
   end
   

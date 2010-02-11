@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
     return false if trainings == marker*4
     string = trainings.include?(marker) ? trainings : '' 
     returning update_attributes(:trainings => string+marker, :experience => experience+10) do
-      try_to_update
+      update_rank
     end
   end
   
@@ -74,12 +74,31 @@ class User < ActiveRecord::Base
     text_location.blank? ? 'undisclosed location' : text_location
   end
   
-  def try_to_update
+  def update_rank
     if rank.next_rank && experience >= rank.next_rank.min_experience
       update_attribute(:rank, rank.next_rank)
       profile_text = "<p>Ho raggiunto il livello #{rank.level} a <a href=\"http://apps.facebook.com/playskate/\">SKATE</a>."
       facebook_session.user.profile_fbml = profile_text
     end
+  end
+  
+  def more_experienced?(other)
+    self.experience > other.experience
+  end
+  
+  def less_experienced?(other)
+    self.experience < other.experience
+  end
+  
+  def cant_do(trick)
+    !available_tricks.include?(trick)
+  end
+  
+  def update_experience(results)
+    update_attributes(
+      :money =>  self.money + results[:money],
+      :experience => self.experience + results[:experience]
+    )
   end
   
   private

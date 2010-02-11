@@ -1,5 +1,5 @@
 class RunsController < ApplicationController
-  before_filter :find_match, :find_contender
+  before_filter :find_match, :find_contender, :update_session
   
   def index
   end
@@ -10,28 +10,18 @@ class RunsController < ApplicationController
   end
   
   def create
-    session[:results] ||= {:wins => 0, :losses => 0, :missed => false, :money => 0, :experience => 0}
     @trick = Trick.find(params[:run][:trick_id])
     update_results
     if won?
       flash[:notice] = 'Hai vinto la sfida, guadagnando denaro e esperienza.'
-      @match.update_attributes(:victory => true, :closed => true)
-      current_user.try_to_update
-      current_user.update_attributes(
-        :money =>  current_user.money+session[:results][:money],
-        :experience => current_user.experience+session[:results][:experience]
-      )
-      @contender.update_attribute(:experience, @contender.experience+session[:results][:experience])
-      @match.update_attribute(:closed, true)
+      current_user.update_rank
+      update_winner(current_user)
+      @match.close && @match.won
     elsif lost?
       flash[:error] = 'Hai perso la sfida. Niente denaro, ma hai guadagnato esperienza.'
-      current_user.try_to_update
-      @contender.update_attributes(
-        :money =>  current_user.money+session[:results][:money],
-        :experience => current_user.experience+session[:results][:experience]
-      )
-      current_user.update_attribute(:experience, @contender.experience+session[:results][:experience])
-      @match.update_attribute(:closed, true)
+      current_user.update_rank
+      update_winner(@contender)
+      @match.close
     else
       redirect_to new_match_run_path(@match) and return
     end
@@ -39,6 +29,10 @@ class RunsController < ApplicationController
   end
   
   private
+  
+  def update_winner(user)
+    user.update_experience(session[:results])
+  end
   
   def find_match
     @match = Match.find(params[:match_id])
@@ -53,11 +47,11 @@ class RunsController < ApplicationController
   end
   
   def update_results
-    if cant_do_trick?
+    if current_user.cant_do(@trick)
       shall_loose
-    elsif more_experienced?
+    elsif current_user.more_experienced?(@contender)
       should_win
-    elsif less_experienced?
+    elsif current_user.less_experienced?(@contender)
       should_loose
     else
       could_win
@@ -92,18 +86,6 @@ class RunsController < ApplicationController
     rand(2) == 1 ? increase_losses : increase_wins
   end
   
-  def cant_do_trick?
-    !current_user.available_tricks.include?(@trick)
-  end
-  
-  def more_experienced?
-    current_user.experience > @contender.experience
-  end
-  
-  def less_experienced?
-    @contender.experience < current_user.experience
-  end
-  
   def increase_wins
     session[:results][:wins] += 1
     session[:results][:money] += 1
@@ -117,5 +99,9 @@ class RunsController < ApplicationController
     session[:results][:missed] = true
     session[:results][:experience] +=1
     flash[:error] = 'Hai sbagliato. Tocca al tuo avversario scegliere il prossimo trick.'
+  end
+  
+  def update_session
+    session[:results] ||= {:wins => 0, :losses => 0, :missed => false, :money => 0, :experience => 0}
   end
 end
