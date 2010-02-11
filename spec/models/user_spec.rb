@@ -53,6 +53,22 @@ describe User do
     user.rank.should_not be_nil
   end
   
+  describe 'CANT_DO' do
+    before do
+      @user = Factory(:user)
+      @trick = Factory(:trick)
+    end
+    
+    it 'should return false' do
+      @user.cant_do(@trick).should be_false
+    end
+    
+    it 'should return true' do
+      @user.stub!(:available_tricks => [])
+      @user.cant_do(@trick).should be_true
+    end
+
+  end
   describe 'AVAILABLE_TRICKS' do
     before do
       @user = Factory(:user, :rank => mock_model(Rank, :level => 1))
@@ -101,7 +117,8 @@ describe User do
         Match.create!(
           :user => @user,
           :contender => mock_model(User),
-          :victory => false
+          :victory => false,
+          :closed => true
         )
       end
     end
@@ -125,7 +142,7 @@ describe User do
     end
   end
   
-  describe 'TRY_TO_UPDATE' do
+  describe 'UPDATE_RANK' do
     before do
       @user = Factory(:user)
       @user.update_attribute(:experience, @user.rank.min_experience)
@@ -133,24 +150,26 @@ describe User do
       @user.rank.next_rank = @next_rank
     end
     
-    it 'should not update rank' do
+    it 'should not update rank when experience is not enough' do
       @user.experience = @next_rank.min_experience - 1
       lambda do
-        @user.try_to_update
+        @user.update_rank
       end.should_not change(@user, :rank)
     end
     
-    it 'should update rank' do
+    it 'should update rank when experience is enough' do
+      @user.facebook_session.user.should_receive(:profile_fbml=)
       @user.experience = @next_rank.min_experience + 1 
       lambda do
-        @user.try_to_update
+        @user.update_rank
       end.should change(@user, :rank)
     end
     
     it 'should update rank' do
+      @user.facebook_session.user.should_receive(:profile_fbml=)
       @user.experience = @next_rank.min_experience
       lambda do
-        @user.try_to_update
+        @user.update_rank
       end.should change(@user, :rank)
     end
     
@@ -158,7 +177,7 @@ describe User do
       @user.rank.next_rank = nil
       @user.experience += 1000
       lambda do
-        @user.try_to_update
+        @user.update_rank
       end.should_not change(@user, :rank)
     end
   end
