@@ -1,4 +1,4 @@
-.upcase {
+s.upcase {
 	text-transform:uppercase;
 }
 
@@ -24,18 +24,18 @@ div#right_column {
 	width:150px;
 }
 
-table#skate_status {
+table.skate_status {
 	margin:10px;
 	background:gray;
 	padding:1px;
 }
 
-#skate_status td, #skate_status th {
+.skate_status td, .skate_status th {
 	padding:5px 10px;
 	background:white;
 }
 
-#skate_status td {
+.skate_status td {
 	border-top:1px solid gray;
 }
 

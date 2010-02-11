@@ -24,31 +24,10 @@
 	</div>
 	<% unless controller.controller_name == 'invitations' %>
 		<div id="right_column">
-			<table id="skate_status" cellpadding="0" cellspacing="0">
-				<tr>
-					<th colspan="2"><%= fb_name(current_user.facebook_id, :useyou => false, :linked => false) %></th>
-				</tr>
-				<tr>
-					<td>Livello:</td>
-					<td><%= current_user.rank.name %></td>
-				</tr>
-				<tr>
-					<td>Energia:</td>
-					<td><%= current_user.stamina %></td>
-				</tr>
-				<tr>
-					<td>Destrezza:</td>
-					<td><%= current_user.dexterity %></td>
-				</tr>
-				<tr>
-					<td>Esperienza:</td>
-					<td><%= current_user.experience %></td>
-				</tr>
-				<tr>
-					<td>Denaro:</td>
-					<td><%= current_user.money %> &euro; </td>
-				</tr>
-			</table>
+			<%= render :partial => 'layouts/player_status', :locals => {:player => current_user} %>
+			<% if @contender %>
+				<%= render :partial => 'layouts/player_status', :locals => {:player => @contender} %>
+			<% end %>
 			<%= render :partial => 'layouts/sponsor' %>
 		</div>
 	<% end %>
