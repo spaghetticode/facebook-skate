@@ -3,4 +3,3 @@ tmp/**/*
 log/*.log
 db/*.sqlite3
 config/database.yml
-config/facebooker.yml
